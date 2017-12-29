@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	{% block head %}
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="{{ author }}" content="">
+		<meta name="{{ description }}" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="{{url_for('blog.static', filename='css/style.css')}}" 
+		rel="stylesheet">
+	</head>
+	{% endblock %}
+
+	<body>
+		<div id="content">
+		{% block content%}
+		{% endblock %}
+		</div>
+		<div id="footer">
+		{% block footer %}
+		{% endblock %}
+		</div>
+	</body>
+</html>

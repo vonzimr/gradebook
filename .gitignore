@@ -1,0 +1,6 @@
+*.pyc
+*.swp
+.ropeproject/*
+*/*/*/.ropeproject/*
+website/.ropeproject/*
+gb/*
