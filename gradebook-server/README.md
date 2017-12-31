@@ -28,8 +28,8 @@ blueprints for how they work.
 # Running Unit Tests
 
 Unit test configuration is found under configurations/testing.cfg. In order to
-run these tests, you should create a new database. *all data within the
-database will be dropped between tests*
+run these tests, you should create a new database. **all data within the
+database will be dropped between tests**
 
 Use the command: 
   ```
