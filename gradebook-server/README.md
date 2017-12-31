@@ -14,9 +14,10 @@ $ . gb/bin/activate
 ```
 
 Once inside the virtual environment Install the requirements with:
-    ```
-    pip install -r requirements.txt
-    ```
+
+```
+pip install -r requirements.txt
+```
     
 Finally, we need to add an environment variable so flask can find the project
 ```
