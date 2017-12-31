@@ -8,7 +8,7 @@ def create_user_roles(app):
         Role(name="administrator", description="All access privileges"),
         Role(name="specialist", description="Access to Specialist reports")]
 
-    num_roles = 0
+    roles_added = 0
 
     with app.app_context():
         for role in roles:
@@ -19,4 +19,6 @@ def create_user_roles(app):
             except IntegrityError:
                 db.session.rollback()
 
-    print("%s Roles added." % num_roles)
+    return roles_added
+
+

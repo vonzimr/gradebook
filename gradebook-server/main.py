@@ -13,6 +13,8 @@ def test():
 
 @app.cli.command()
 def add_roles():
-    create_user_roles(app)
+    print("Adding User roles..")
+    roles_created = create_user_roles(app)
+    print ("%s roles created." % roles_created)
 
 
