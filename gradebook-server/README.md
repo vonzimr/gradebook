@@ -27,18 +27,21 @@ blueprints for how they work.
 
 * Running Unit Tests
 
-Unit test configuration is found under configurations/testing.cfg. Currently,
-expects a seperate mysql database to run unit tests. It is recommended to use
-the same dbms for running tests.
+Unit test configuration is found under configurations/testing.cfg. In order to
+run these tests, you should create a new database. *all data within the
+database will be dropped between tests*
 
-Currently, I've got the unit tests running by using the following command:
+Use the command: 
+  ```
+ flask test 
+  ```
+  to run the test cases.
+
+
+  You can also directly invoke the unittest module,
 
   ```
   python -m unittest discover gradebook "*_test.py"
   ```
 
-  Note that this line expects any new unit test files to be appended with
-  `_test.py`.
-
-  I'll look into writing a command such that unit tests can be run by writing
-  `flask test` or similar.
+  Note that in order for tests to be discovered, they must be appended with `_test.py`.
