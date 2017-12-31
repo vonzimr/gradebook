@@ -30,7 +30,7 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
 
 * Create a database to use, for example `gradebook`
 
-* Edit the `configurations/dev.cfg` file to point to your working database.
+* Edit the `configurations/dev.cfg` file to point to the created database.
     ```
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://<user>:<password>@192.168.43.131/<database>'
     ```
