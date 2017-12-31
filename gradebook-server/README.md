@@ -1,25 +1,51 @@
 #  Grade Report Application
-## To get up and running, do the following:
+## Setup
 
-* Install the requirements with:
-    ```
-    pip install -r requirements.txt
-    ```
-* Edit the `configurations/dev.cfg` file to point to a working mysql database.
-Alternatively, plug in your favorite db connector. Note that we'll most likely
-end up using Mariadb 10.2+ in order to store JSON objects.
+### Python Requirements
+Everything should be done in a virtual environment. If you do not have virtualenv, install it with:
+```
+$ sudo pip install virtualenv
+``` 
+(or use your distro's package manager). 
+I prefer to store my virtual environment in the root of the project. I've also conveniently added a line to the project's `.gitignore` to keep this directory from being committed.
+```
+$ virtualenv gb
+$ . gb/bin/activate
+```
 
+Once inside the virtual environment Install the requirements with:
+
+```
+pip install -r requirements.txt
+```
+    
+Finally, we need to add an environment variable so flask can find the project
+```
+$ export FLASK_APP=/path/to/project/gradebook-server/main.py
+```
+
+### Database Configuration
+
+We'll be using MariaDB 10.2+ in order to store JSON objects.
+
+* Create a database to use, for example `gradebook`
+
+* Edit the `configurations/dev.cfg` file to point to the created database.
+    ```
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://<user>:<password>@<database-address>/<database>'
+    ```
 * Apply the database migrations:
 
     ``
-    flask db upgrade
+    $ flask db upgrade
     ``
 
+### Running the server
 
 * Run the application with:
 
     ``
-    FLASK_APP=main.py flask run
+    flask run
     ``
 
 * Currently, the available routes are  `/accounts/*`. Check out the associated
@@ -27,7 +53,7 @@ blueprints for how they work.
 
 # Running Unit Tests
 
-Unit test configuration is found under configurations/testing.cfg. In order to
+The testing configuration is found under `configurations/testing.cfg`. In order to
 run these tests, you should create a new database. **all data within the
 database will be dropped between tests**
 
