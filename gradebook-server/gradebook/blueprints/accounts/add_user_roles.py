@@ -11,7 +11,6 @@ def create_user_roles(app):
     num_roles = 0
 
     with app.app_context():
-        db.create_all()
         for role in roles:
             try:
                 db.session.add(role)
