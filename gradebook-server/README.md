@@ -35,8 +35,6 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://<user>:<password>@<database-address>/<database>'
     ```
 
-* Initialize the database
-
 * Apply the database migrations:
 
     ```
@@ -45,9 +43,9 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
 
 * Add the user roles to the `role` table
 
-```
-$ flask add_roles
-```
+    ```
+    $ flask add_roles
+    ```
 
 
 
