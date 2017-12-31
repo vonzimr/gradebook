@@ -1,12 +1,14 @@
 #  Grade Report Application
-## To get up and running, do the following:
+## Setup
+
+### Python Requirements
 
 * Install the requirements with:
     ```
     pip install -r requirements.txt
     ```
 
-# Database Configuration
+### Database Configuration
 
 We'll be using MariaDB 10.2+ in order to store JSON objects.
 
