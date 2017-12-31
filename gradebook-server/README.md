@@ -32,8 +32,7 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
 
 * Edit the `configurations/dev.cfg` file to point to your working database.
     ```
-    SQLALCHEMY_DATABASE_URI
-    = 'mysql+mysqldb://<user>:<password>@192.168.43.131/<database>'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://<user>:<password>@192.168.43.131/<database>'
     ```
 * Apply the database migrations:
 
