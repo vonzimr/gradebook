@@ -40,7 +40,6 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
 * Apply the database migrations:
 
     ```
-    $ flask db migrate 
     $ flask db upgrade
     ```
 
