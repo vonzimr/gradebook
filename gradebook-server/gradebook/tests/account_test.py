@@ -1,3 +1,4 @@
+import itertools
 import unittest
 from flask import json, jsonify
 from gradebook import create_app
@@ -39,9 +40,59 @@ class AccountTestCase(unittest.TestCase):
 
         self.assertEqual(request.status, '400 BAD REQUEST')
 
+    def test_create_missing_data(self):
+        payload = dict(username="test", password="testing",
+                       email="test@test.com", role="teacher")
+
+        for i  in range(0, len(payload.keys()) -1):
+            for keyperm in itertools.permutations(payload.keys(), i):
+                partial_data = {key : payload[key] for key in keyperm}
+                resp = self.client.post('/accounts/create',
+                                        data=json.dumps(partial_data),
+                                        content_type='application/json')
+
+                self.assertEqual(resp.status, "400 BAD REQUEST")
+
+
+    def test_create_missing_username(self):
+        resp = self.create_user("", "testing@test.com", "test", "teacher")
+
+
+        self.assertEqual(resp.status, "400 BAD REQUEST")
+
+    def test_create_missing_password(self):
+        resp = self.create_user("test", "testing@test.com", "", "teacher")
+
+        self.assertEqual(resp.status, "400 BAD REQUEST")
+
+    def test_create_missing_email(self):
+        resp = self.create_user("test", "", "password", "teacher")
+
+        self.assertEqual(resp.status, "400 BAD REQUEST")
+
+    def test_create_missing_role(self):
+        resp = self.create_user("test", "test@test.com", "password", "")
+
+        self.assertEqual(resp.status, "400 BAD REQUEST")
+
+
+    def test_create_invalid_role(self):
+        resp = self.create_user("test", "test@test.com", "password", "slimeperson")
+
+        self.assertEqual(resp.status, "400 BAD REQUEST")
+
+    def test_duplicate_add(self):
+        self.create_user("test", "testing@test.com", "test", "teacher")
+        duplicate = self.create_user("test", "testing@test.com", "test", "teacher")
+
+        self.assertEqual(duplicate.status, "303 SEE OTHER")
+
     def test_add_teacher(self):
         with self.app.app_context():
-            self.create_user('test_user', 'test@test.com', 'password', 'teacher')
+            response = self.create_user('test_user', 'test@test.com', 'password', 'teacher')
+
+            self.assertEqual(response.status, "201 CREATED")
+
             user = User.query.filter_by(username='test_user').first()
 
             self.assertEqual(user.username,'test_user')
@@ -49,6 +100,34 @@ class AccountTestCase(unittest.TestCase):
             self.assertNotEqual(user.password , 'password')
             self.assertEqual(user.get_roles(), ['teacher'])
 
+    def test_add_specialist(self):
+        with self.app.app_context():
+            response = self.create_user('test_user', 'test@test.com',
+                                        'password', 'specialist')
+
+            self.assertEqual(response.status, "201 CREATED")
+
+            user = User.query.filter_by(username='test_user').first()
+
+            self.assertEqual(user.username,'test_user')
+            self.assertEqual(user.email, 'test@test.com')
+            self.assertNotEqual(user.password , 'password')
+            self.assertEqual(user.get_roles(), ['specialist'])
+
+
+    def test_add_admin(self):
+        with self.app.app_context():
+            response = self.create_user('test_user', 'test@test.com',
+                                        'password', 'administrator')
+
+            self.assertEqual(response.status, "201 CREATED")
+
+            user = User.query.filter_by(username='test_user').first()
+
+            self.assertEqual(user.username,'test_user')
+            self.assertEqual(user.email, 'test@test.com')
+            self.assertNotEqual(user.password , 'password')
+            self.assertEqual(user.get_roles(), ['administrator'])
     def create_user(self, username, email, password, role):
         payload = dict(username=username, password=password,
                        email=email, role=role)
