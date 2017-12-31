@@ -12,7 +12,7 @@ def test():
     runner.run(u)
 
 @app.cli.command()
-def init_db():
+def add_roles():
     create_user_roles(app)
 
 
