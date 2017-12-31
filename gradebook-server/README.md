@@ -25,7 +25,7 @@ end up using Mariadb 10.2+ in order to store JSON objects.
 * Currently, the available routes are  `/accounts/*`. Check out the associated
 blueprints for how they work.
 
-* Running Unit Tests
+# Running Unit Tests
 
 Unit test configuration is found under configurations/testing.cfg. In order to
 run these tests, you should create a new database. *all data within the
