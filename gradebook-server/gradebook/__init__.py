@@ -19,9 +19,4 @@ def create_app(config_filename):
     jwt.init_app(app)
 
     #Add existing user roles to database.
-    #Initialize Roles
-    if app.config['DEBUG'] and not app.config['TESTING']:
-        from gradebook.blueprints.accounts.add_user_roles import create_user_roles
-        create_user_roles(app, db)
-
     return app

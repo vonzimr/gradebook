@@ -25,6 +25,7 @@ We'll be using MariaDB 10.2+ in order to store JSON objects.
     flask db upgrade
     ``
 
+### Running the Application
 
 * Run the application with:
 
