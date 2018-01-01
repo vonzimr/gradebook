@@ -1,5 +1,6 @@
 from gradebook.database import db
 from passlib.apps import custom_app_context as flask_user_context
+from sqlalchemy.orm.exc import NoResultFound
 
 # Create a table to support a many-to-many relationship between Users and Roles
 roles_users = db.Table(
@@ -38,6 +39,12 @@ class User(db.Model):
 
     def get_roles(self):
         return [role.name for role in self.roles]
+
+    def set_role(self, role):
+        role = Role.query.filter_by(name=role).first()
+        if role is None:
+            raise NoResultFound
+        self.roles.append(role)
 
 class Role(db.Model):
     _tablename_ = 'role'

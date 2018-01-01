@@ -15,7 +15,7 @@ def create_user_roles(app):
             try:
                 db.session.add(role)
                 db.session.commit()
-                num_roles+=1
+                roles_added +=1
             except IntegrityError:
                 db.session.rollback()
 
