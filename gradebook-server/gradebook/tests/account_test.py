@@ -83,9 +83,12 @@ class AccountTestCase(unittest.TestCase):
 
     def test_duplicate_add(self):
         self.create_user("test", "testing@test.com", "test", "teacher")
-        duplicate = self.create_user("test", "testing@test.com", "test", "teacher")
+        duplicate_username = self.create_user("test", "testing@test.com", "test", "teacher")
+        duplicate_email    = self.create_user("test2", "testing@test.com", "test", "teacher")
 
-        self.assertEqual(duplicate.status, "303 SEE OTHER")
+
+        self.assertEqual(duplicate_username.status, "303 SEE OTHER")
+        self.assertEqual(duplicate_email.status, "303 SEE OTHER")
 
     def test_add_teacher(self):
         with self.app.app_context():
