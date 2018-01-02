@@ -139,6 +139,9 @@ class AccountTestCase(unittest.TestCase):
         request = self.client.get('/accounts/info',
                                   headers=self.get_auth_header(username,password))
 
+        num_teachers = len(json.loads(request.data))
+
+        self.assertEqual(num_teachers, 20)
 
 
     def add_test_users(self, role, n):
