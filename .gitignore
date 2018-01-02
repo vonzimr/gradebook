@@ -6,9 +6,11 @@
 */*/*/*/.ropeproject/*
 gradebook-server/.ropeproject/*
 gb/*
+configurations/testing.cfg
+configurations/dev.cfg
 
 #Node.js
-# Logs
+#Logs
 logs
 *.log
 npm-debug.log*

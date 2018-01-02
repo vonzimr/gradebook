@@ -79,6 +79,9 @@ class Create(Resource):
         if User.query.filter_by(username = username).first() is not None:
             return json_msg_response("Account already exists", 303)
 
+        if User.query.filter_by(email = email).first() is not None:
+            return json_msg_response("Email already in use", 303)
+
         user = User(username = username, email = email)
         user.hash_pass(password)
         try:
