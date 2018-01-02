@@ -16,7 +16,7 @@ class User(db.Model):
         - hash_pass(password): Store hash of password. Do not store the
         plaintext password, that is the purpose of this method.
         - verify_pass(password): Verify the password.
-    '''
+        '''
 
     __tablename__     = 'user'
     id                = db.Column(db.Integer, primary_key = True)
@@ -45,6 +45,11 @@ class User(db.Model):
         if role is None:
             raise NoResultFound
         self.roles.append(role)
+
+    def as_dict(self):
+        return {'username' : self.username,
+                'email'    : self.email,
+                'roles'    : self.get_roles()}
 
 class Role(db.Model):
     _tablename_ = 'role'

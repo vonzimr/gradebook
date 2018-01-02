@@ -128,21 +128,42 @@ class AccountTestCase(unittest.TestCase):
             self.assertEqual(user.email, 'test@test.com')
             self.assertNotEqual(user.password , 'password')
             self.assertEqual(user.get_roles(), ['administrator'])
+
+    def test_list_teachers(self):
+        username = 'test'
+        password = 'testing'
+        self.create_user(username, 'test@test.com', password, 'administrator')
+
+
+        self.add_test_users("teacher", 20)
+        request = self.client.get('/accounts/info',
+                                  headers=self.get_auth_header(username,password))
+
+
+
+    def add_test_users(self, role, n):
+        for i in range(0, n):
+            self.create_user(role + str(i)*5, str(i)*5 +"@" + str(i)*5 + ".com", str(i)*5, role)
+
+
+
     def create_user(self, username, email, password, role):
         payload = dict(username=username, password=password,
                        email=email, role=role)
 
         return self.client.post('/accounts/create', data=json.dumps(payload), content_type='application/json')
 
-    def get_user_info(self, user, password):
+    def get_auth_header(self, username, password):
         request = self.client.post('/accounts/login',
-                          json = dict(username = username,
-                                      password = password),
+                          data = json.dumps(dict(username = username,
+                                      password = password)),
                                 content_type = 'application/json')
 
-
-        token   = request['access-token']
+        token   = json.loads(request.data)['access-token']
         headers = {'Authorization' : 'Bearer ' + token}
+        return headers
 
-        return self.app.get('/accounts/login', headers=headers)
+    def get_user_info(self, user, password):
+        return self.app.get('/accounts/login',
+                            headers=self.get_auth_header(user, password))
 
