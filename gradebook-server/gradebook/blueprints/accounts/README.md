@@ -1,20 +1,26 @@
 # API Documentation
 
 ## Login
-Log into the gradebook.
+
 `POST /accounts/login`
+
+Log into the gradebook.
+
 
 Parameters (JSON):
 * `username`
 * `password`
 
 `GET /accounts/login/`
+
 Returns the `identity` and `claims` of the current user.
 
 
-## Create a New User
-Create a user account
+## Create
+
 `POST /accounts/create`
+
+Create a user account
 
 Parameters (JSON):
 * `username`
@@ -25,16 +31,19 @@ Parameters (JSON):
 
 
 ## List
-List all Users of a certain role.
-This route will probably change signficantly, given we will need ways of
-listing user's based on classrooms, etc.
 
 `GET /accounts/list/:role`
 
-Return Object Example:
+List all Users of a certain role.
+This route will probably change signficantly, given we will need ways of
+listing accounts based on classrooms, etc.
+
+
+Example of an object that is returned:
 
 `GET /acount/list/teacher`
 ```
+
 [
     {
         "email": "example@example.com",

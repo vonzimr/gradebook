@@ -94,14 +94,14 @@ class Create(Resource):
 
         return json_msg_response("Account Created", 201)
 
-class Info(Resource):
+class List(Resource):
     @jwt_required
     @auth("administrator")
-    def get(self):
-        teachers  = User.query.filter(User.roles.any(name='teacher')).all()
+    def get(self, role):
+        teachers  = User.query.filter(User.roles.any(name=role)).all()
         resp = make_response(jsonify([teacher.as_dict() for teacher in teachers]), 201)
         return resp
 
 api.add_resource(Login, '/login')
 api.add_resource(Create, '/create')
-api.add_resource(Info, '/info')
+api.add_resource(List, '/list/<string:role>')

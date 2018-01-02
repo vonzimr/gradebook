@@ -139,7 +139,7 @@ class AccountTestCase(unittest.TestCase):
 
 
         self.add_test_users("teacher", 20)
-        request = self.client.get('/accounts/info',
+        request = self.client.get('/accounts/list/teacher',
                                   headers=self.get_auth_header(username,password))
 
         num_teachers = len(json.loads(request.data))
