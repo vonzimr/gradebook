@@ -51,7 +51,7 @@ Example of an object that is returned:
             "teacher"
         ],
         "username": "user2",
-        id: 2
+        "id": 2
     },
     {
         "email": "example@gmail.com",
