@@ -105,13 +105,16 @@ class List(Resource):
 
 class UserInfo(Resource):
     @jwt_required
+    @auth("administrator")
     def get(self, id):
         account = User.query.filter(User.id == id).first()
-        resp = make_response(jsonify(account.as_dict()), 201)
+        if account is None:
+            return json_msg_response("No user found.", 404)
+        resp = make_response(jsonify(account.as_dict()), 200)
         return resp
 
 
 api.add_resource(Login, '/login')
 api.add_resource(Create, '/create')
 api.add_resource(List, '/list/<string:role>')
-api.add_resource(UserInfo, '/user/id/<int:id>')
+api.add_resource(UserInfo, '/id/<int:id>')
