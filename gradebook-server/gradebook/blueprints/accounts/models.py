@@ -49,7 +49,9 @@ class User(db.Model):
     def as_dict(self):
         return {'username' : self.username,
                 'email'    : self.email,
-                'roles'    : self.get_roles()}
+                'roles'    : self.get_roles(),
+                'id'       : self.id
+                }
 
 class Role(db.Model):
     _tablename_ = 'role'
