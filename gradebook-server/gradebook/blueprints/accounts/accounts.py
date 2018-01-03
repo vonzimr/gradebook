@@ -103,6 +103,15 @@ class List(Resource):
         resp = make_response(jsonify([account.as_dict() for account in accounts]), 201)
         return resp
 
+class UserInfo(Resource):
+    @jwt_required
+    def get(self, id):
+        account = User.query.filter(User.id == id).first()
+        resp = make_response(jsonify(account.as_dict()), 201)
+        return resp
+
+
 api.add_resource(Login, '/login')
 api.add_resource(Create, '/create')
 api.add_resource(List, '/list/<string:role>')
+api.add_resource(UserInfo, '/user/id/<int:id>')
