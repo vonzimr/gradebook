@@ -7,8 +7,8 @@ from flask_jwt_extended import (JWTManager, get_jwt_identity,
 
 from .models import User, Role
 from gradebook.database import db
-from gradebook.decorators.utils import (json_msg_response, json_required,
-                                       auth)
+from gradebook.decorators import auth, json_required
+from gradebook.utils import json_msg_response
 
 from sqlalchemy.orm.exc import NoResultFound
 
