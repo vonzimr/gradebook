@@ -65,6 +65,7 @@ class Create(Resource):
             return json_msg_response("Missing info in JSON", 400)
 
 
+        #TODO: Better parsing of user input.
         if len(username) < 3:
             return json_msg_response("Username is too short", 400)
 
@@ -98,8 +99,8 @@ class List(Resource):
     @jwt_required
     @auth("administrator")
     def get(self, role):
-        teachers  = User.query.filter(User.roles.any(name=role)).all()
-        resp = make_response(jsonify([teacher.as_dict() for teacher in teachers]), 201)
+        accounts = User.query.filter(User.roles.any(name=role)).all()
+        resp = make_response(jsonify([account.as_dict() for account in accounts]), 201)
         return resp
 
 api.add_resource(Login, '/login')
