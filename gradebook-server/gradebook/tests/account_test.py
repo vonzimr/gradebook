@@ -103,6 +103,27 @@ class AccountTestCase(unittest.TestCase):
             self.assertNotEqual(user.password , 'password')
             self.assertEqual(user.get_roles(), ['teacher'])
 
+    def test_grab_user(self):
+        self.create_user("test", "testing@test.com", "test", "teacher")
+        self.create_user("test_admin", "testing-admin@test.com", "test", "administrator")
+
+        request = self.client.get("/accounts/id/0")
+        self.assertEqual(request.status, "401 UNAUTHORIZED")
+
+        request = self.client.get("/accounts/id/0",
+                         headers=self.get_auth_header("test_admin", "test"))
+
+        self.assertEqual(request.status, "404 NOT FOUND")
+
+        request = self.client.get("/accounts/id/1",
+                         headers=self.get_auth_header("test_admin", "test"))
+
+        self.assertEqual(request.status, "200 OK")
+
+
+
+
+
     def test_add_specialist(self):
         with self.app.app_context():
             response = self.create_user('test_user', 'test@test.com',
@@ -120,15 +141,15 @@ class AccountTestCase(unittest.TestCase):
 
     def test_add_admin(self):
         with self.app.app_context():
-            response = self.create_user('test_user', 'test@test.com',
+            response = self.create_user('test_adm', 'testable@test.com',
                                         'password', 'administrator')
 
             self.assertEqual(response.status, "201 CREATED")
 
-            user = User.query.filter_by(username='test_user').first()
+            user = User.query.filter_by(username='test_adm').first()
 
-            self.assertEqual(user.username,'test_user')
-            self.assertEqual(user.email, 'test@test.com')
+            self.assertEqual(user.username,'test_adm')
+            self.assertEqual(user.email, 'testable@test.com')
             self.assertNotEqual(user.password , 'password')
             self.assertEqual(user.get_roles(), ['administrator'])
 
@@ -151,6 +172,7 @@ class AccountTestCase(unittest.TestCase):
                                   headers=self.get_auth_header("test_teacher", password))
 
         self.assertEqual(request.status, "403 FORBIDDEN")
+
 
     def add_test_users(self, role, n):
         for i in range(0, n):
