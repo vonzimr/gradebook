@@ -136,7 +136,7 @@ class AccountTestCase(unittest.TestCase):
         username = 'test'
         password = 'testing'
         self.create_user(username, 'test@test.com', password, 'administrator')
-
+        self.create_user("test_teacher", 'testing@test.com', password, 'specialist')
 
         self.add_test_users("teacher", 20)
         request = self.client.get('/accounts/list/teacher',
@@ -144,8 +144,13 @@ class AccountTestCase(unittest.TestCase):
 
         num_teachers = len(json.loads(request.data))
 
+
         self.assertEqual(num_teachers, 20)
 
+        request = self.client.get('/accounts/list/teacher',
+                                  headers=self.get_auth_header("test_teacher", password))
+
+        self.assertEqual(request.status, "403 FORBIDDEN")
 
     def add_test_users(self, role, n):
         for i in range(0, n):
