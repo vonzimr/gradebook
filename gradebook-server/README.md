@@ -18,6 +18,11 @@ Once inside the virtual environment Install the requirements with:
 ```
 pip install -r requirements.txt
 ```
+
+Note: It is necessary to also install the development packages for mysql and
+python3, this is distro specific. If you get errors while running pip, look up
+the install requirements for the failed packages and adjust accordingly.
+
     
 Finally, we need to add an environment variable so flask can find the project
 ```
