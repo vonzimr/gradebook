@@ -56,6 +56,10 @@ class Login(Resource):
 class Create(Resource):
     @json_required
     def post(self):
+        print(request.json.get('username'))
+        print(request.json.get('password'))
+        print(request.json.get('email'))
+        print(request.json.get('role'))
         username = request.json.get('username')
         password = request.json.get('password')
         email    = request.json.get('email')
