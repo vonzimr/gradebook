@@ -1,0 +1,55 @@
+version: '3.2'
+services:
+  db:
+    restart: always
+    image: mariadb:10.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=gradebook
+      - MYSQL_USER=flask
+      - MYSQL_PASSWORD=testing
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./gradebook-server
+        target: /app
+    ports:
+        - 5000:5000
+
+  upgrade:
+      image: app
+      build:
+        context: .   
+      volumes:
+        - type: bind
+          source: ./gradebook-server
+          target: /app
+      command: flask db upgrade
+      depends_on:
+          - db
+  migration:
+      image: app
+      build:
+        context: .   
+      volumes:
+        - type: bind
+          source: ./gradebook-server
+          target: /app
+      command: flask db migrate
+      depends_on:
+          - upgrade 
+  add_roles:
+      image: app
+      build:
+        context: .   
+      volumes:
+        - type: bind
+          source: ./gradebook-server
+          target: /app
+      command: flask add_roles
+      depends_on:
+          - migration 
+

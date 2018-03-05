@@ -10,7 +10,8 @@ def create_app(config_filename):
 
     #Initialize the Account Blueprint
     from gradebook.blueprints.accounts.models import User, Role
-    from gradebook.blueprints.accounts.accounts import accounts, jwt
+    from gradebook.blueprints.accounts.accounts import accounts
+    from auth import jwt
     app.register_blueprint(accounts)
 
     #Initialize Flask Modules

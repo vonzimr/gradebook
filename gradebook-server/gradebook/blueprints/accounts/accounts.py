@@ -1,9 +1,11 @@
 from flask import current_app, Blueprint, request, jsonify, make_response
 from functools import wraps
 from flask_restful import Api, Resource, url_for, abort
-from flask_jwt_extended import (JWTManager, get_jwt_identity,
+from flask_jwt_extended mport (JWTManager, get_jwt_identity,
                                 jwt_required,
                                create_access_token, get_jwt_claims)
+
+from gradebook.auth import jwt
 
 from .models import User, Role
 from gradebook.database import db
@@ -15,19 +17,6 @@ from sqlalchemy.orm.exc import NoResultFound
 accounts = Blueprint('accounts', __name__,
                   url_prefix = '/accounts')
 api = Api(accounts)
-jwt = JWTManager()
-
-
-@jwt.user_claims_loader
-def add_claims_to_access_token(user):
-    return {'roles' : user.get_roles()}
-
-@jwt.user_identity_loader
-def user_identity_lookup(user):
-    return user.username
-
-def json_msg_response(msg, status_code):
-        return make_response(jsonify({"msg": msg}), status_code)
 
 class Login(Resource):
     @jwt_required
@@ -56,10 +45,6 @@ class Login(Resource):
 class Create(Resource):
     @json_required
     def post(self):
-        print(request.json.get('username'))
-        print(request.json.get('password'))
-        print(request.json.get('email'))
-        print(request.json.get('role'))
         username = request.json.get('username')
         password = request.json.get('password')
         email    = request.json.get('email')
