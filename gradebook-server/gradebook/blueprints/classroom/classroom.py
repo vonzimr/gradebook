@@ -22,7 +22,4 @@ class Create(Resource):
     def post(self):
         pass
 
-class Delete(
-
-
 api.add_resource(Create, '/create')
